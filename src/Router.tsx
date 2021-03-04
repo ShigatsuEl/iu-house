@@ -7,7 +7,7 @@ const Router: React.FunctionComponent = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path="/" exact component={Home} />
         <Route path="/about" component={About} />
         <Redirect path="*" to="/" />
       </Switch>
