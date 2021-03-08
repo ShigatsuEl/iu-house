@@ -37,7 +37,7 @@ const Video: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <VideoComponent ref={videoRef} $loading={loading} autoPlay muted loop>
+    <VideoComponent ref={videoRef} $loading={loading} autoPlay muted loop controlsList="nodownload">
       <source src={Source} type="video/mp4" />
       Your browser does not support the video tag.
     </VideoComponent>

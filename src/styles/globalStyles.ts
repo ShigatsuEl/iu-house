@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   html,
   body {
     overflow: hidden;
+    font-family: Tangerine;
   }
 
   a {
