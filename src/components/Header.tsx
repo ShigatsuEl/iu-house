@@ -43,7 +43,7 @@ const Header: React.FunctionComponent = () => {
         <NavItem>More</NavItem>
       </Navigator>
       <Navigator>
-        <MainTitle to="/">Celebrity</MainTitle>
+        <MainTitle to="/">IU House</MainTitle>
       </Navigator>
       <Navigator className="odd-nav">Contact</Navigator>
     </HeaderContainer>

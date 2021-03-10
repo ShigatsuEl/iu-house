@@ -8,7 +8,7 @@ const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 50px 30px 50px;
+  padding: 40px 50px 40px 50px;
   width: 100%;
 `;
 

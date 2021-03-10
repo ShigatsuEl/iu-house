@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Source from '../assets/celebrityVideo.mp4';
+import Source from '../assets/video/celebrityVideo.mp4';
 
 type VideoProp = {
   $loading: boolean;
@@ -8,7 +8,7 @@ type VideoProp = {
 
 const VideoComponent = styled.video<VideoProp>`
   position: absolute;
-  z-index: -1;
+  z-index: -10;
   top: 50%;
   left: 50%;
   width: 100vw;
