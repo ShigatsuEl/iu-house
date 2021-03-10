@@ -15,12 +15,11 @@ const AudioBtn = styled.button`
   border-radius: 50%;
   width: 10px;
   height: 10px;
-  z-index: 10;
+  z-index: 1;
   background-color: ${(props) => props.theme.light.subBackground};
 `;
 
 const Audio: React.FunctionComponent = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const testSound = () => {
@@ -29,7 +28,7 @@ const Audio: React.FunctionComponent = () => {
 
   return (
     <AudioContainer>
-      <AudioComponent ref={audioRef} loop>
+      <AudioComponent ref={audioRef} autoPlay loop>
         <source src={Source} type="audio/mp3" />
         Your browser does not support the audio tag.
       </AudioComponent>
