@@ -6,7 +6,7 @@ export const theme: DefaultTheme = {
     headingTwo: '36px',
     headingThree: '24px',
     mainTitle: '40px',
-    subTitle: '10.8px',
+    subTitle: '24px',
     paragraph: '12px',
   },
 

@@ -28,7 +28,7 @@ const MainTitle = styled(Link)`
 
 const NavItem = styled.div`
   margin-right: 2rem;
-  font-size: 24px;
+  font-size: ${(props) => props.theme.px.subTitle};
   .odd-nav {
     margin-right: unset;
     margin-left: 2rem;
