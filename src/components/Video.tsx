@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Source from '../assets/video/celebrityVideo.mp4';
 
@@ -21,27 +21,26 @@ const VideoComponent = styled.video<VideoProp>`
   transition: opacity 2s ease-in-out;
 `;
 
-const Video: React.FunctionComponent = () => {
+const Video = forwardRef<HTMLVideoElement>((_props, ref) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const isVideoLoad = () => {
     setLoading(false);
   };
 
   useEffect(() => {
-    if (videoRef) {
-      videoRef.current?.addEventListener('loadeddata', isVideoLoad);
-    }
-    return () => videoRef.current?.removeEventListener('loadeddata', isVideoLoad);
+    (ref as React.RefObject<HTMLVideoElement>)?.current?.addEventListener('loadeddata', isVideoLoad);
+    return () => (ref as React.RefObject<HTMLVideoElement>)?.current?.removeEventListener('loadeddata', isVideoLoad);
   }, []);
 
   return (
-    <VideoComponent ref={videoRef} $loading={loading} autoPlay muted loop controlsList="nodownload">
+    <VideoComponent ref={ref} $loading={loading} muted loop controlsList="nodownload">
       <source src={Source} type="video/mp4" />
       Your browser does not support the video tag.
     </VideoComponent>
   );
-};
+});
+
+Video.displayName = 'Video';
 
 export default Video;

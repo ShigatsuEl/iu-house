@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Source from 'assets/Image/celebrityImage.jpg';
 
@@ -52,15 +52,17 @@ const NoSoundBtn = styled.div`
 
 interface ModalProps {
   audioRef?: React.RefObject<HTMLAudioElement>;
+  videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
 const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const { audioRef } = props;
+  const { audioRef, videoRef } = props;
 
   const withOutSound = () => {
     modalRef?.current?.classList.add('modal-hidden');
     audioRef?.current?.play();
+    videoRef?.current?.play();
   };
 
   return (

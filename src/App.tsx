@@ -7,12 +7,13 @@ import Modal from 'components/Modal';
 
 const App: React.FunctionComponent = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
     <>
       <GlobalStyle />
-      <Modal audioRef={audioRef} />
-      <Video />
+      <Modal audioRef={audioRef} videoRef={videoRef} />
+      <Video ref={videoRef} />
       <Audio ref={audioRef} />
       <Router />
     </>
