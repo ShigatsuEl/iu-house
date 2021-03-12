@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import { IconContext } from 'react-icons';
+import { BiPlayCircle } from 'react-icons/bi';
 import styled from 'styled-components';
 import Source from 'assets/Image/celebrityImage.jpg';
 
@@ -38,6 +40,7 @@ const ModalBox = styled.div`
   top: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
@@ -46,8 +49,33 @@ const ModalBox = styled.div`
   color: ${(props) => props.theme.light.mainBackground};
 `;
 
-const NoSoundBtn = styled.div`
+const IntroSoundBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 15%;
+`;
+
+const ModalDesc = styled.div`
+  margin: 20px 0 40px 0;
   font-size: ${(props) => props.theme.px.subTitle};
+`;
+
+const WithSoundBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px;
+  border: 2px solid ${(props) => props.theme.light.primaryText};
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+  font-size: 2rem;
+`;
+
+const NoSoundBtn = styled.div`
+  font-size: 1.5rem;
 `;
 
 interface ModalProps {
@@ -70,7 +98,14 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
       <ModalBackground ref={modalRef} source={Source}>
         <ModalHeader>IU House</ModalHeader>
         <ModalBox>
-          <NoSoundBtn onClick={() => withOutSound()}>Begin without Sound</NoSoundBtn>
+          <IntroSoundBox>
+            <IconContext.Provider value={{ size: '2rem' }}>
+              <BiPlayCircle />
+            </IconContext.Provider>
+            <ModalDesc>This website uses audio to enhance your experience</ModalDesc>
+            <WithSoundBtn>LETS GO</WithSoundBtn>
+            <NoSoundBtn onClick={() => withOutSound()}>Begin without Sound</NoSoundBtn>
+          </IntroSoundBox>
         </ModalBox>
       </ModalBackground>
     </ModalContainer>
@@ -78,5 +113,3 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
 };
 
 export default Modal;
-
-// This website uses audio to enhance your experience

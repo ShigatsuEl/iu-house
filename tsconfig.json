@@ -6,6 +6,13 @@
       "dom.iterable",
       "esnext"
     ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],
+    "declaration": true,
+    "declarationDir": "./src/@types",
+    "noImplicitAny": false,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -22,6 +29,10 @@
     "baseUrl": "src",
   },
   "include": [
-    "src"
+    "src",
+  ],
+  "exclude": [
+    "node_modules",
+    "./src/@types"
   ]
 }

@@ -5,8 +5,8 @@ export const theme: DefaultTheme = {
     mainHeader: '84px',
     headingTwo: '36px',
     headingThree: '24px',
-    mainTitle: '40px',
-    subTitle: '24px',
+    mainTitle: '50px',
+    subTitle: '36px',
     paragraph: '12px',
   },
 
@@ -23,6 +23,6 @@ export const theme: DefaultTheme = {
     subBackground: '#EEE2D1',
     primaryText: '#262422',
     secondaryText: '#FFFFFF',
-    border: '#A4A2F9',
+    border: '#E24D34',
   },
 };
