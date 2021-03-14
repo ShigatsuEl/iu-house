@@ -34,7 +34,7 @@ const Video = forwardRef<HTMLVideoElement>((_props, ref) => {
   }, []);
 
   return (
-    <VideoComponent ref={ref} $loading={loading} muted loop controlsList="nodownload">
+    <VideoComponent ref={ref} $loading={loading} muted loop playsInline controlsList="nodownload">
       <source src={Source} type="video/mp4" />
       Your browser does not support the video tag.
     </VideoComponent>

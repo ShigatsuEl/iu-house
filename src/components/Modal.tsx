@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { BiPlayCircle } from 'react-icons/bi';
 import styled from 'styled-components';
@@ -67,15 +67,16 @@ const WithSoundBtn = styled.div`
   align-items: center;
   text-align: center;
   margin-bottom: 40px;
-  border: 2px solid ${(props) => props.theme.light.primaryText};
   border-radius: 50%;
   width: 6rem;
   height: 6rem;
   font-size: 2rem;
+  cursor: pointer;
 `;
 
-const NoSoundBtn = styled.div`
+const WithOutSoundBtn = styled.div`
   font-size: 1.5rem;
+  cursor: pointer;
 `;
 
 interface ModalProps {
@@ -84,14 +85,30 @@ interface ModalProps {
 }
 
 const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
+  const [loading, setLoading] = useState<boolean>(true);
   const modalRef = useRef<HTMLDivElement>(null);
   const { audioRef, videoRef } = props;
 
   const withOutSound = () => {
     modalRef?.current?.classList.add('modal-hidden');
+    if (audioRef?.current) {
+      audioRef.current.muted = true;
+    }
     audioRef?.current?.play();
     videoRef?.current?.play();
   };
+
+  const withSound = () => {
+    modalRef?.current?.classList.add('modal-hidden');
+    audioRef?.current?.play();
+    videoRef?.current?.play();
+  };
+
+  useEffect(() => {
+    if (audioRef?.current !== null && videoRef?.current !== null) {
+      setLoading(false);
+    }
+  }, [audioRef, videoRef]);
 
   return (
     <ModalContainer>
@@ -103,8 +120,12 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
               <BiPlayCircle />
             </IconContext.Provider>
             <ModalDesc>This website uses audio to enhance your experience</ModalDesc>
-            <WithSoundBtn>LETS GO</WithSoundBtn>
-            <NoSoundBtn onClick={() => withOutSound()}>Begin without Sound</NoSoundBtn>
+            {loading ? null : (
+              <>
+                <WithSoundBtn onClick={() => withSound()}>LETS GO</WithSoundBtn>
+                <WithOutSoundBtn onClick={() => withOutSound()}>Begin without Sound</WithOutSoundBtn>
+              </>
+            )}
           </IntroSoundBox>
         </ModalBox>
       </ModalBackground>
