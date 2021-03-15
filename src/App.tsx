@@ -4,6 +4,7 @@ import { GlobalStyle } from 'styles/globalStyles';
 import Video from 'components/Video';
 import Audio from 'components/Audio';
 import Modal from 'components/Modal';
+import Cursor from 'components/Cursor';
 
 const App: React.FunctionComponent = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -12,6 +13,7 @@ const App: React.FunctionComponent = () => {
   return (
     <>
       <GlobalStyle />
+      <Cursor />
       <Modal audioRef={audioRef} videoRef={videoRef} />
       <Video ref={videoRef} />
       <Audio ref={audioRef} />
