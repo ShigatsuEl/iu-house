@@ -3,6 +3,7 @@ import { IconContext } from 'react-icons';
 import { BiPlayCircle } from 'react-icons/bi';
 import styled from 'styled-components';
 import Source from 'assets/Image/celebrityImage.jpg';
+import { useMousePosition } from 'hooks/useMousePosition';
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -87,6 +88,7 @@ interface ModalProps {
 const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const modalRef = useRef<HTMLDivElement>(null);
+  const mousePosition = useMousePosition();
   const { audioRef, videoRef } = props;
 
   const withOutSound = () => {
@@ -109,6 +111,10 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
       setLoading(false);
     }
   }, [audioRef, videoRef]);
+
+  useEffect(() => {
+    console.log(mousePosition);
+  }, [mousePosition]);
 
   return (
     <ModalContainer>
