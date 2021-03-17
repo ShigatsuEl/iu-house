@@ -4,6 +4,7 @@ import { BiPlayCircle } from 'react-icons/bi';
 import styled from 'styled-components';
 import Source from 'assets/Image/celebrityImage.jpg';
 import { useMousePosition } from 'hooks/useMousePosition';
+import { useElementPosition } from 'hooks/useElementPosition';
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -62,7 +63,7 @@ const ModalDesc = styled.div`
   font-size: ${(props) => props.theme.px.subTitle};
 `;
 
-const WithSoundBtn = styled.div`
+const WithSoundBtn = styled.div<{ moveX?: number; moveY?: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,6 +74,10 @@ const WithSoundBtn = styled.div`
   height: 6rem;
   font-size: 2rem;
   cursor: pointer;
+  z-index: 10;
+  transform: translate3d(0px, 0px, 0px);
+  transform-origin: 50% 50%;
+  transition: all 300ms linear;
 `;
 
 const WithOutSoundBtn = styled.div`
@@ -88,8 +93,20 @@ interface ModalProps {
 const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const modalRef = useRef<HTMLDivElement>(null);
-  const mousePosition = useMousePosition();
+  const soundBtnElement = useRef<HTMLDivElement>(null);
+  const { x: mouseX, y: mouseY } = useMousePosition();
+  const { x: eleX, y: eleY, width: eleWid, height: eleHei } = useElementPosition(soundBtnElement);
   const { audioRef, videoRef } = props;
+  let radius, moveX, moveY;
+  if (mouseX != null && eleX != null && eleWid != null) {
+    moveX = mouseX - (eleX + eleWid / 2);
+  }
+  if (mouseY != null && eleY != null && eleHei != null) {
+    moveY = mouseY - (eleY + eleHei / 2);
+  }
+  if (eleWid != null && eleHei != null) {
+    radius = Math.sqrt(Math.pow(eleWid * 0.5, 2) + Math.pow(eleHei * 0.5, 2));
+  }
 
   const withOutSound = () => {
     modalRef?.current?.classList.add('modal-hidden');
@@ -113,8 +130,29 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   }, [audioRef, videoRef]);
 
   useEffect(() => {
-    console.log(mousePosition);
-  }, [mousePosition]);
+    if (
+      mouseX !== null &&
+      mouseY !== null &&
+      eleX !== undefined &&
+      eleY !== undefined &&
+      eleWid !== undefined &&
+      eleHei !== undefined
+    ) {
+      if (Math.pow(radius, 2) >= Math.pow(eleX + eleWid / 2 - mouseX, 2) + Math.pow(eleY + eleHei / 2 - mouseY, 2)) {
+        console.log(
+          Math.pow(radius, 2),
+          Math.pow(eleX + eleWid / 2 - mouseX, 2) + Math.pow(eleY + eleHei / 2 - mouseY, 2),
+        );
+        if (soundBtnElement.current) {
+          soundBtnElement.current.style.transform = `translate3d(${moveX}px, ${moveY}px, 0px)`;
+        }
+      } else {
+        if (soundBtnElement.current) {
+          soundBtnElement.current.style.transform = `translate3d(0px, 0px, 0px)`;
+        }
+      }
+    }
+  }, [mouseX, mouseY, eleX, eleY, eleWid, eleHei]);
 
   return (
     <ModalContainer>
@@ -128,7 +166,9 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
             <ModalDesc>This website uses audio to enhance your experience</ModalDesc>
             {loading ? null : (
               <>
-                <WithSoundBtn onClick={() => withSound()}>LETS GO</WithSoundBtn>
+                <WithSoundBtn ref={soundBtnElement} onClick={() => withSound()} moveX={moveX} moveY={moveY}>
+                  LETS GO
+                </WithSoundBtn>
                 <WithOutSoundBtn onClick={() => withOutSound()}>Begin without Sound</WithOutSoundBtn>
               </>
             )}

@@ -18,7 +18,7 @@ export const useElementPosition = (ele: RefObject<HTMLElement>): Position => {
   useEffect(() => {
     const DOMRect = ele?.current?.getBoundingClientRect();
     setElementPosition({ x: DOMRect?.x, y: DOMRect?.y, width: DOMRect?.width, height: DOMRect?.height });
-  }, []);
+  }, [ele?.current]);
 
   return elementPosition;
 };
