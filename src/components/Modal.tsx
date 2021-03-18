@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { BiPlayCircle } from 'react-icons/bi';
 import styled from 'styled-components';
@@ -86,6 +86,8 @@ const WithOutSoundBtn = styled.div`
 interface ModalProps {
   audioRef?: React.RefObject<HTMLAudioElement>;
   videoRef?: React.RefObject<HTMLVideoElement>;
+  isMuted: boolean;
+  setIsMuted: Dispatch<SetStateAction<boolean>>;
 }
 
 const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
@@ -94,7 +96,7 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   const soundBtnElement = useRef<HTMLDivElement>(null);
   const { x: mouseX, y: mouseY } = useMousePosition();
   const { x: eleX, y: eleY, width: eleWid, height: eleHei } = useElementPosition(soundBtnElement);
-  const { audioRef, videoRef } = props;
+  const { audioRef, videoRef, isMuted, setIsMuted } = props;
   let radius, moveX, moveY;
   if (mouseX != null && eleX != null && eleWid != null) {
     moveX = (mouseX - (eleX + eleWid / 2)) / 2;
@@ -109,7 +111,7 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   const withOutSound = () => {
     modalRef?.current?.classList.add('modal-hidden');
     if (audioRef?.current) {
-      audioRef.current.muted = true;
+      audioRef.current.muted = isMuted;
     }
     audioRef?.current?.play();
     videoRef?.current?.play();
@@ -117,6 +119,7 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
 
   const withSound = () => {
     modalRef?.current?.classList.add('modal-hidden');
+    setIsMuted(!isMuted);
     audioRef?.current?.play();
     videoRef?.current?.play();
   };

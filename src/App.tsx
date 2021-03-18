@@ -15,7 +15,7 @@ const App: React.FunctionComponent = () => {
     <>
       <GlobalStyle />
       <Cursor />
-      <Modal audioRef={audioRef} videoRef={videoRef} />
+      <Modal audioRef={audioRef} videoRef={videoRef} isMuted={isMuted} setIsMuted={setIsMuted} />
       <Video ref={videoRef} />
       <Audio ref={audioRef} isMuted={isMuted} setIsMuted={setIsMuted} />
       <Router />
