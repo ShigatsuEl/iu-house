@@ -1,6 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Source from 'assets/audio/celebrityAudio.mp3';
+import { GoUnmute } from 'react-icons/go';
+import { RiVolumeMuteFill } from 'react-icons/ri';
 
 const AudioContainer = styled.div``;
 
@@ -8,20 +10,26 @@ const AudioComponent = styled.audio`
   display: none;
 `;
 
-const AudioBtn = styled.button`
+const AudioBtn = styled.div`
   position: absolute;
   right: 50px;
   bottom: 50px;
   border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  z-index: 1;
-  background-color: ${(props) => props.theme.light.subBackground};
+  width: 20px;
+  height: 20px;
+  z-index: 5;
+  /* background-color: white; */
 `;
 
 const Audio = forwardRef<HTMLAudioElement>((_props, ref) => {
-  const testSound = () => {
-    // ref.current?.play();
+  const audioRef = ref as React.RefObject<HTMLAudioElement>;
+  const [isMuted, setIsMuted] = useState<boolean | undefined>(audioRef?.current?.muted);
+
+  const toggleSound = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
   };
 
   return (
@@ -30,7 +38,13 @@ const Audio = forwardRef<HTMLAudioElement>((_props, ref) => {
         <source src={Source} type="audio/mp3" />
         Your browser does not support the audio tag.
       </AudioComponent>
-      <AudioBtn onClick={() => testSound()}></AudioBtn>
+      <AudioBtn onClick={() => toggleSound()}>
+        {isMuted ? (
+          <RiVolumeMuteFill style={{ fontSize: '1.2rem', color: 'white' }} />
+        ) : (
+          <GoUnmute style={{ fontSize: '1.2rem', color: 'white' }} />
+        )}
+      </AudioBtn>
     </AudioContainer>
   );
 });

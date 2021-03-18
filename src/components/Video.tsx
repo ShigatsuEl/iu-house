@@ -31,7 +31,7 @@ const Video = forwardRef<HTMLVideoElement>((_props, ref) => {
   useEffect(() => {
     (ref as React.RefObject<HTMLVideoElement>)?.current?.addEventListener('loadeddata', isVideoLoad);
     return () => (ref as React.RefObject<HTMLVideoElement>)?.current?.removeEventListener('loadeddata', isVideoLoad);
-  }, []);
+  }, [ref]);
 
   return (
     <VideoComponent ref={ref} $loading={loading} muted loop playsInline controlsList="nodownload">

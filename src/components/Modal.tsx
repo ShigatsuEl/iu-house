@@ -8,9 +8,14 @@ import { useElementPosition } from 'hooks/useElementPosition';
 
 const ModalContainer = styled.div`
   position: absolute;
-  z-index: 5;
+  z-index: 10;
   width: 100vw;
   height: 100vh;
+  &.modal-hidden {
+    margin-top: 100%;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+  }
 `;
 
 const ModalBackground = styled.div<{ source?: string }>`
@@ -21,11 +26,6 @@ const ModalBackground = styled.div<{ source?: string }>`
   background-image: url(${(props) => props.source});
   background-position: center;
   background-size: cover;
-  &.modal-hidden {
-    margin-top: 100%;
-    opacity: 0;
-    transition: all 1s ease-in-out;
-  }
 `;
 
 const ModalHeader = styled.h3`
@@ -47,7 +47,6 @@ const ModalBox = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: 10;
   color: ${(props) => props.theme.light.mainBackground};
 `;
 
@@ -74,7 +73,6 @@ const WithSoundBtn = styled.div<{ moveX?: number; moveY?: number }>`
   height: 6rem;
   font-size: 2rem;
   cursor: pointer;
-  z-index: 10;
   transform: translate3d(0px, 0px, 0px);
   transform-origin: 50% 50%;
   transition: all 300ms linear;
@@ -139,10 +137,6 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
       eleHei !== undefined
     ) {
       if (Math.pow(radius, 2) >= Math.pow(eleX + eleWid / 2 - mouseX, 2) + Math.pow(eleY + eleHei / 2 - mouseY, 2)) {
-        console.log(
-          Math.pow(radius, 2),
-          Math.pow(eleX + eleWid / 2 - mouseX, 2) + Math.pow(eleY + eleHei / 2 - mouseY, 2),
-        );
         if (soundBtnElement.current) {
           soundBtnElement.current.style.transform = `translate3d(${moveX}px, ${moveY}px, 0px)`;
         }
@@ -155,8 +149,8 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   }, [mouseX, mouseY, eleX, eleY, eleWid, eleHei]);
 
   return (
-    <ModalContainer>
-      <ModalBackground ref={modalRef} source={Source}>
+    <ModalContainer ref={modalRef}>
+      <ModalBackground source={Source}>
         <ModalHeader>IU House</ModalHeader>
         <ModalBox>
           <IntroSoundBox>
