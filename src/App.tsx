@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Router from './Router';
 import { GlobalStyle } from 'styles/globalStyles';
 import Video from 'components/Video';
@@ -9,6 +9,7 @@ import Cursor from 'components/Cursor';
 const App: React.FunctionComponent = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState<boolean>(true);
 
   return (
     <>
@@ -16,7 +17,7 @@ const App: React.FunctionComponent = () => {
       <Cursor />
       <Modal audioRef={audioRef} videoRef={videoRef} />
       <Video ref={videoRef} />
-      <Audio ref={audioRef} />
+      <Audio ref={audioRef} isMuted={isMuted} setIsMuted={setIsMuted} />
       <Router />
     </>
   );

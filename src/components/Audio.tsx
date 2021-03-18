@@ -1,4 +1,5 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { Dispatch, forwardRef, SetStateAction } from 'react';
 import styled from 'styled-components';
 import Source from 'assets/audio/celebrityAudio.mp3';
 import { GoUnmute } from 'react-icons/go';
@@ -20,9 +21,14 @@ const AudioBtn = styled.div`
   z-index: 5;
 `;
 
-const Audio = forwardRef<HTMLAudioElement>((_props, ref) => {
+interface IAudio {
+  isMuted: boolean;
+  setIsMuted: Dispatch<SetStateAction<boolean>>;
+}
+
+const Audio = forwardRef<HTMLAudioElement, IAudio>((props, ref) => {
   const audioRef = ref as React.RefObject<HTMLAudioElement>;
-  const [isMuted, setIsMuted] = useState<boolean | undefined>(audioRef?.current?.muted);
+  const { isMuted, setIsMuted } = props;
 
   const toggleSound = () => {
     if (audioRef.current) {
