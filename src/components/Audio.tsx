@@ -18,7 +18,6 @@ const AudioBtn = styled.div`
   width: 20px;
   height: 20px;
   z-index: 5;
-  /* background-color: white; */
 `;
 
 const Audio = forwardRef<HTMLAudioElement>((_props, ref) => {

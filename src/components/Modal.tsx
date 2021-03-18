@@ -97,13 +97,13 @@ const Modal: React.FunctionComponent<ModalProps> = (props: ModalProps) => {
   const { audioRef, videoRef } = props;
   let radius, moveX, moveY;
   if (mouseX != null && eleX != null && eleWid != null) {
-    moveX = mouseX - (eleX + eleWid / 2);
+    moveX = (mouseX - (eleX + eleWid / 2)) / 2;
   }
   if (mouseY != null && eleY != null && eleHei != null) {
-    moveY = mouseY - (eleY + eleHei / 2);
+    moveY = (mouseY - (eleY + eleHei / 2)) / 2;
   }
   if (eleWid != null && eleHei != null) {
-    radius = Math.sqrt(Math.pow(eleWid * 0.5, 2) + Math.pow(eleHei * 0.5, 2));
+    radius = Math.sqrt(Math.pow(eleWid * 1, 2) + Math.pow(eleHei * 1, 2));
   }
 
   const withOutSound = () => {
