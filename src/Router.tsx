@@ -12,7 +12,7 @@ const Router: React.FunctionComponent<RouterProps> = (props: RouterProps) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact render={() => <Home videoRef={videoRef} />} />
         <Route path="/about" render={() => <About videoRef={videoRef} />} />
         <Redirect path="*" to="/" />
       </Switch>

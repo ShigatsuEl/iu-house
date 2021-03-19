@@ -20,7 +20,7 @@ export const theme: DefaultTheme = {
 
   light: {
     mainBackground: '#FFFFFF',
-    subBackground: '#EEE2D1',
+    subBackground: '#BA55D3',
     primaryText: '#262422',
     secondaryText: '#FFFFFF',
     border: '#E24D34',
