@@ -1,14 +1,30 @@
-import React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import Header from 'components/Header';
 
-type IProps = RouteComponentProps;
+const AboutContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: ${(props) => props.theme.light.subBackground};
+`;
 
-const About: React.FunctionComponent<IProps> = () => {
+interface AboutProps {
+  videoRef: React.RefObject<HTMLVideoElement>;
+}
+
+const About: React.FunctionComponent<AboutProps> = (props: AboutProps) => {
+  const { videoRef } = props;
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.style.opacity = '0';
+    }
+  }, [videoRef]);
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-    </div>
+    <AboutContainer>
+      <Header />
+    </AboutContainer>
   );
 };
 

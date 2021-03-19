@@ -27,12 +27,12 @@ const AudioBtn = styled.div`
   transition: all 300ms linear;
 `;
 
-interface IAudio {
+interface AudioProps {
   isMuted: boolean;
   setIsMuted: Dispatch<SetStateAction<boolean>>;
 }
 
-const Audio = forwardRef<HTMLAudioElement, IAudio>((props, ref) => {
+const Audio = forwardRef<HTMLAudioElement, AudioProps>((props, ref) => {
   const audioRef = ref as React.RefObject<HTMLAudioElement>;
   const audioBtnElement = useRef<HTMLDivElement>(null);
   const { isMuted, setIsMuted } = props;

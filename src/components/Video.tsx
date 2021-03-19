@@ -19,6 +19,7 @@ const VideoComponent = styled.video<VideoProp>`
   transform: translate(-50%, -50%);
   opacity: ${(props) => (props.$loading ? 0 : 1)};
   transition: opacity 2s ease-in-out;
+  user-select: none;
 `;
 
 const Video = forwardRef<HTMLVideoElement>((_props, ref) => {

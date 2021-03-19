@@ -26,7 +26,7 @@ const MainTitle = styled(Link)`
   font-size: ${(props) => props.theme.px.mainTitle};
 `;
 
-const NavItem = styled.div`
+const NavItem = styled(Link)`
   margin-right: 2rem;
   font-size: ${(props) => props.theme.px.subTitle};
   .odd-nav {
@@ -39,8 +39,8 @@ const Header: React.FunctionComponent = () => {
   return (
     <HeaderContainer>
       <Navigator>
-        <NavItem>About</NavItem>
-        <NavItem>More</NavItem>
+        <NavItem to="/about">About</NavItem>
+        <NavItem to="/">More</NavItem>
       </Navigator>
       <Navigator>
         <MainTitle to="/">IU House</MainTitle>
