@@ -14,6 +14,7 @@ const ModalContainer = styled.div`
   &.modal-hidden {
     margin-top: 100%;
     opacity: 0;
+    z-index: -1;
     transition: all 1s ease-in-out;
   }
 `;
