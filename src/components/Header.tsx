@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 5;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   padding: 30px 50px 30px 50px;
 `;
 

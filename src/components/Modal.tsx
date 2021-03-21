@@ -8,7 +8,7 @@ import { useElementPosition } from 'hooks/useElementPosition';
 
 const ModalContainer = styled.div`
   position: absolute;
-  z-index: 10;
+  z-index: 9;
   width: 100vw;
   height: 100vh;
   &.modal-hidden {
