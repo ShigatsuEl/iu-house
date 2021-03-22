@@ -7,8 +7,8 @@
       "esnext"
     ],
     "typeRoots": [
+      "./src/@types",
       "./node_modules/@types",
-      "./src/@types"
     ],
     "declaration": true,
     "declarationDir": "./src/@types",
