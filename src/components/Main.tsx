@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { Throttle } from 'react-throttle';
 import styled from 'styled-components';
 
 const MainContainer = styled.div`
@@ -38,12 +39,14 @@ const Main: React.FunctionComponent = () => {
   };
 
   return (
-    <MainContainer onWheel={handleWheel}>
-      <HorizonContainer ref={horizonRef} style={props}>
-        <ExamComponent>Test Component 1</ExamComponent>
-        <ExamComponent>Test Component 2</ExamComponent>
-      </HorizonContainer>
-    </MainContainer>
+    <Throttle time="100" handler="onWheel">
+      <MainContainer onWheel={handleWheel}>
+        <HorizonContainer ref={horizonRef} style={props}>
+          <ExamComponent>Test Component 1</ExamComponent>
+          <ExamComponent>Test Component 2</ExamComponent>
+        </HorizonContainer>
+      </MainContainer>
+    </Throttle>
   );
 };
 
