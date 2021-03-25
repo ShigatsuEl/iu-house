@@ -53,5 +53,5 @@
 [03:06.12](I know you are‚ are)
 [03:08.41](I know you are‚ are)
 [03:10.91]You are my celebrity
-[03:14.50]by RentAnAdviser.com
+[03:14.50]Artist - IU & Song - Celebrity
 `;

@@ -7,8 +7,8 @@ const LrcComponent = styled(Lrc)`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  width: 30%;
-  height: 50%;
+  width: 100%;
+  height: 40%;
   overflow: hidden !important;
 
   /* webkit */

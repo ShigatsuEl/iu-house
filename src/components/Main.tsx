@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Throttle } from 'react-throttle';
+import CoverSource from 'assets/Image/celebrityCover.jpg';
 import styled from 'styled-components';
 import Lyric from './Lyric';
 
@@ -17,6 +18,27 @@ const HorizonContainer = styled(animated.div)`
   align-items: center;
   width: 100%;
   height: 100%;
+`;
+
+const LyricContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 110px 0;
+  width: 50%;
+  height: 100%;
+`;
+
+const LyricCover = styled.div<{ url: string }>`
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  background-image: url(${(props) => props.url});
+  background-size: 220% 220%;
+  background-position: 50% 10%;
+  transition: transform 0.5s ease-in-out;
 `;
 
 const ExamComponent = styled.div`
@@ -47,7 +69,10 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
     <Throttle time="100" handler="onWheel">
       <MainContainer onWheel={handleWheel}>
         <HorizonContainer ref={horizonRef} style={style}>
-          <Lyric {...props} />
+          <LyricContainer>
+            <LyricCover url={CoverSource} />
+            <Lyric {...props} />
+          </LyricContainer>
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>
         </HorizonContainer>
