@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Throttle } from 'react-throttle';
 import styled from 'styled-components';
+import Lyric from './Lyric';
 
 const MainContainer = styled.div`
   display: flex;
@@ -25,23 +26,28 @@ const ExamComponent = styled.div`
   height: 100%;
 `;
 
-const Main: React.FunctionComponent = () => {
+interface MainProps {
+  audioRef: React.RefObject<HTMLAudioElement>;
+}
+
+const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   const [translateX, setTranslateX] = useState<number>(0);
   const horizonRef = useRef<HTMLDivElement>(null);
-  const props = useSpring({
+  const style = useSpring({
     transform: `translate3d(${translateX}px, 0px, 0px)`,
     from: { transform: 'translate3d(0px, 0px, 0px)' },
   });
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    console.log(e);
+    // console.log(e);
     setTranslateX((prevX) => prevX + e.deltaY);
   };
 
   return (
     <Throttle time="100" handler="onWheel">
       <MainContainer onWheel={handleWheel}>
-        <HorizonContainer ref={horizonRef} style={props}>
+        <HorizonContainer ref={horizonRef} style={style}>
+          <Lyric {...props} />
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>
         </HorizonContainer>
