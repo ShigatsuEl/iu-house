@@ -18,7 +18,7 @@ const App: React.FunctionComponent = () => {
       <Modal audioRef={audioRef} videoRef={videoRef} isMuted={isMuted} setIsMuted={setIsMuted} />
       <Video ref={videoRef} />
       <Audio ref={audioRef} isMuted={isMuted} setIsMuted={setIsMuted} />
-      <Router videoRef={videoRef} />
+      <Router videoRef={videoRef} audioRef={audioRef} />
     </>
   );
 };

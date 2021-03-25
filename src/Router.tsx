@@ -5,15 +5,16 @@ import Home from './containers/Home';
 
 interface RouterProps {
   videoRef: React.RefObject<HTMLVideoElement>;
+  audioRef: React.RefObject<HTMLAudioElement>;
 }
 
 const Router: React.FunctionComponent<RouterProps> = (props: RouterProps) => {
-  const { videoRef } = props;
+  const { videoRef, audioRef } = props;
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact render={() => <Home videoRef={videoRef} />} />
-        <Route path="/about" render={() => <About videoRef={videoRef} />} />
+        <Route path="/about" render={() => <About videoRef={videoRef} audioRef={audioRef} />} />
         <Redirect path="*" to="/" />
       </Switch>
     </BrowserRouter>

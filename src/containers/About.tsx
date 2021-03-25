@@ -14,10 +14,11 @@ const AboutContainer = styled.div`
 
 interface AboutProps {
   videoRef: React.RefObject<HTMLVideoElement>;
+  audioRef: React.RefObject<HTMLAudioElement>;
 }
 
 const About: React.FunctionComponent<AboutProps> = (props: AboutProps) => {
-  const { videoRef } = props;
+  const { videoRef, audioRef } = props;
   const aboutContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const About: React.FunctionComponent<AboutProps> = (props: AboutProps) => {
   return (
     <AboutContainer ref={aboutContainerRef}>
       <Header />
-      <Main />
+      <Main audioRef={audioRef} />
     </AboutContainer>
   );
 };
