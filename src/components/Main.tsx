@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Throttle } from 'react-throttle';
 import CoverSource from 'assets/Image/celebrityCover.jpg';
@@ -7,26 +7,23 @@ import Lyric from './Lyric';
 
 const MainContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
   height: 100vh;
 `;
 
 const HorizonContainer = styled(animated.div)`
   display: flex;
   align-items: center;
-  width: 100%;
   height: 100%;
+  overflow-x: hidden;
 `;
 
 const LyricContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  flex-shrink: 0;
-  padding: 110px 0;
-  width: 50%;
+  padding: 3% 0;
+  width: 50vw;
   height: 100%;
 `;
 
@@ -43,8 +40,7 @@ const LyricCover = styled.div<{ url: string }>`
 
 const ExamComponent = styled.div`
   display: flex;
-  flex-shrink: 0;
-  width: 100%;
+  width: 100vw;
   height: 100%;
 `;
 
@@ -61,9 +57,21 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   });
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    // console.log(e);
-    setTranslateX((prevX) => prevX + e.deltaY);
+    setTranslateX((prevX) => prevX + e.deltaY * -1);
   };
+
+  useEffect(() => {
+    if (translateX > 0) {
+      setTranslateX(0);
+    }
+    if (horizonRef.current) {
+      if (horizonRef.current?.getBoundingClientRect().width <= translateX * -1) {
+        // console.log(horizonRef.current?.getBoundingClientRect().width, translateX * -1);
+        // Todo: Horizon Container의 width에서 마지막 자식 컴포넌트 width를 뺀 값이 translateX값보다 적을 때 whell prevent하기
+        setTranslateX((prevX) => prevX);
+      }
+    }
+  }, [translateX]);
 
   return (
     <Throttle time="100" handler="onWheel">
