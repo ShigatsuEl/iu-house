@@ -4,6 +4,7 @@ import { Throttle } from 'react-throttle';
 import CoverSource from 'assets/Image/celebrityCover.jpg';
 import styled from 'styled-components';
 import Lyric from './Lyric';
+import Video from './Video';
 
 const MainContainer = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const LyricContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 3% 0;
+  padding: 7rem;
   width: 50vw;
   height: 100%;
 `;
@@ -38,6 +39,20 @@ const LyricCover = styled.div<{ url: string }>`
   transition: transform 0.5s ease-in-out;
 `;
 
+const VideoContainer = styled.div`
+  padding: 7rem 7rem 7rem 0;
+  width: 50vw;
+  height: 100%;
+`;
+
+const VideoWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  width: 50vw;
+  height: 100%;
+  z-index: 3;
+`;
+
 const ExamComponent = styled.div`
   display: flex;
   width: 100vw;
@@ -50,6 +65,7 @@ interface MainProps {
 
 const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   const [translateX, setTranslateX] = useState<number>(0);
+  const subVideoRef = useRef<HTMLVideoElement>(null);
   const horizonRef = useRef<HTMLDivElement>(null);
   const style = useSpring({
     transform: `translate3d(${translateX}px, 0px, 0px)`,
@@ -81,6 +97,10 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
             <LyricCover url={CoverSource} />
             <Lyric {...props} />
           </LyricContainer>
+          <VideoContainer>
+            <VideoWrapper />
+            <Video ref={subVideoRef} isHome={false} />
+          </VideoContainer>
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>
         </HorizonContainer>
