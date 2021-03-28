@@ -20,7 +20,7 @@ const HorizonContainer = styled(animated.div)`
 
 const LyricContainer = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   padding: 7rem;
@@ -60,10 +60,12 @@ const ExamComponent = styled.div`
 `;
 
 interface MainProps {
+  videoRef: React.RefObject<HTMLVideoElement>;
   audioRef: React.RefObject<HTMLAudioElement>;
 }
 
 const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
+  const { videoRef } = props;
   const [translateX, setTranslateX] = useState<number>(0);
   const subVideoRef = useRef<HTMLVideoElement>(null);
   const horizonRef = useRef<HTMLDivElement>(null);
@@ -89,6 +91,17 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
     }
   }, [translateX]);
 
+  useEffect(() => {
+    // videoRef Prop을 받았을 때(Home Video만 제외)만 동작
+    if (videoRef !== undefined) {
+      // Home Video와 Sub Video가 존재하고 Home Video의 재생상태가 멈춤이 아닐때만 동작
+      if (videoRef.current && subVideoRef.current && !videoRef.current.paused) {
+        subVideoRef.current.currentTime = videoRef.current.currentTime;
+        subVideoRef.current.play();
+      }
+    }
+  }, [subVideoRef, videoRef.current?.paused]);
+
   return (
     <Throttle time="100" handler="onWheel">
       <MainContainer onWheel={handleWheel}>
@@ -99,7 +112,7 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
           </LyricContainer>
           <VideoContainer>
             <VideoWrapper />
-            <Video ref={subVideoRef} isHome={false} />
+            <Video ref={subVideoRef} videoRef={videoRef} isHome={false} autoPlay={false} />
           </VideoContainer>
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>

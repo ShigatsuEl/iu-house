@@ -44,6 +44,8 @@ const VideoComponent = styled.video<VideoComponentProps>`
 
 interface VideoProps {
   isHome?: boolean;
+  autoPlay?: boolean;
+  videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
 const Video = forwardRef<HTMLVideoElement, VideoProps>((props: VideoProps, ref) => {
@@ -70,6 +72,7 @@ Video.displayName = 'Video';
 
 Video.defaultProps = {
   isHome: true,
+  autoPlay: false,
 };
 
 export default Video;

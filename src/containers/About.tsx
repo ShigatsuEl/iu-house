@@ -31,7 +31,7 @@ const About: React.FunctionComponent<AboutProps> = (props: AboutProps) => {
   return (
     <AboutContainer ref={aboutContainerRef}>
       <Header />
-      <Main audioRef={audioRef} />
+      <Main videoRef={videoRef} audioRef={audioRef} />
     </AboutContainer>
   );
 };
