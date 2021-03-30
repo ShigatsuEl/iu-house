@@ -5,6 +5,7 @@ import CoverSource from 'assets/Image/celebrityCover.jpg';
 import styled from 'styled-components';
 import Lyric from './Lyric';
 import Video from './Video';
+import Introduce from './Introduce';
 
 const MainContainer = styled.div`
   display: flex;
@@ -118,6 +119,7 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
             <VideoWrapper />
             <Video ref={subVideoRef} videoRef={videoRef} isHome={false} autoPlay={false} />
           </VideoContainer>
+          <Introduce />
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>
         </HorizonContainer>
