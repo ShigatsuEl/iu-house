@@ -18,14 +18,14 @@ const HorizonContainer = styled(animated.div)`
   overflow-x: hidden;
 `;
 
-const LyricContainer = styled.div`
+const LyricContainer = styled(animated.div)`
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   padding: 7rem;
   width: 50vw;
   height: 100%;
+  transition: transform 0.3s linear;
 `;
 
 const LyricCover = styled.div<{ url: string }>`
@@ -36,13 +36,13 @@ const LyricCover = styled.div<{ url: string }>`
   background-image: url(${(props) => props.url});
   background-size: 220% 220%;
   background-position: 50% 10%;
-  transition: transform 0.5s ease-in-out;
 `;
 
-const VideoContainer = styled.div`
+const VideoContainer = styled(animated.div)`
   padding: 7rem 7rem 7rem 0;
   width: 50vw;
   height: 100%;
+  transition: transform 0.3s linear;
 `;
 
 const VideoWrapper = styled.div`
@@ -69,8 +69,12 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   const [translateX, setTranslateX] = useState<number>(0);
   const subVideoRef = useRef<HTMLVideoElement>(null);
   const horizonRef = useRef<HTMLDivElement>(null);
-  const style = useSpring({
+  const mainTranslate = useSpring({
     transform: `translate3d(${translateX}px, 0px, 0px)`,
+    from: { transform: 'translate3d(0px, 0px, 0px)' },
+  });
+  const subTranslate = useSpring({
+    transform: `translate3d(${translateX / 2}px, 0px, 0px)`,
     from: { transform: 'translate3d(0px, 0px, 0px)' },
   });
 
@@ -105,12 +109,12 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   return (
     <Throttle time="100" handler="onWheel">
       <MainContainer onWheel={handleWheel}>
-        <HorizonContainer ref={horizonRef} style={style}>
-          <LyricContainer>
+        <HorizonContainer ref={horizonRef} style={mainTranslate}>
+          <LyricContainer style={subTranslate}>
             <LyricCover url={CoverSource} />
             <Lyric {...props} />
           </LyricContainer>
-          <VideoContainer>
+          <VideoContainer style={subTranslate}>
             <VideoWrapper />
             <Video ref={subVideoRef} videoRef={videoRef} isHome={false} autoPlay={false} />
           </VideoContainer>
