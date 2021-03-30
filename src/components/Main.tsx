@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Lyric from './Lyric';
 import Video from './Video';
 import Introduce from './Introduce';
+import { useTranslationPosition } from 'hooks/useTranslatePosition';
 
 const MainContainer = styled.div`
   display: flex;
@@ -70,14 +71,7 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   const [translateX, setTranslateX] = useState<number>(0);
   const subVideoRef = useRef<HTMLVideoElement>(null);
   const horizonRef = useRef<HTMLDivElement>(null);
-  const mainTranslate = useSpring({
-    transform: `translate3d(${translateX}px, 0px, 0px)`,
-    from: { transform: 'translate3d(0px, 0px, 0px)' },
-  });
-  const subTranslate = useSpring({
-    transform: `translate3d(${translateX / 2}px, 0px, 0px)`,
-    from: { transform: 'translate3d(0px, 0px, 0px)' },
-  });
+  const [mainTranslate, subTranslate] = useTranslationPosition(translateX);
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     setTranslateX((prevX) => prevX + e.deltaY * -1);
