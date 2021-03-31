@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { animated } from 'react-spring';
 import { Throttle } from 'react-throttle';
-import CoverSource from 'assets/Image/celebrityCover.jpg';
 import styled from 'styled-components';
+import CoverSource from 'assets/Image/celebrityCover.jpg';
+import { useTranslationPosition } from 'hooks/useTranslatePosition';
 import Lyric from './Lyric';
 import Video from './Video';
 import Introduce from './Introduce';
-import { useTranslationPosition } from 'hooks/useTranslatePosition';
 
 const MainContainer = styled.div`
   display: flex;
