@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import IntroList from './IntroList';
 
 const IntroduceContainer = styled.div`
   display: flex;
@@ -20,7 +21,11 @@ const BottomBanner = styled.div`
 const Introduce: React.FunctionComponent = () => {
   return (
     <IntroduceContainer>
-      <TopBanner></TopBanner>
+      <TopBanner>
+        <IntroList />
+        <IntroList />
+        <IntroList />
+      </TopBanner>
       <BottomBanner></BottomBanner>
     </IntroduceContainer>
   );
