@@ -33,10 +33,10 @@ const urlstyles = css<ImageUrlType>`
     `}
 `;
 
-const IntroListContainer = styled.div`
+const IntroListContainer = styled.div<IntroListProps>`
   display: flex;
   color: ${(props) => props.theme.light.secondaryText};
-  margin-right: 15rem;
+  margin-right: ${(props) => (props.isLast ? '0' : '15rem')};
 `;
 
 const IntroListColumn = styled.div`
@@ -59,25 +59,26 @@ const IntroListAlbumSubTitle = styled.span`
 
 interface IntroListProps {
   isFirst?: boolean;
-  title: string;
+  $title: string;
   subTitle: string;
   url?: string;
+  isLast?: boolean;
 }
 
 const IntroList: React.FunctionComponent<IntroListProps> = (props: IntroListProps) => {
-  const { isFirst, title, subTitle } = props;
+  const { isFirst, $title, subTitle } = props;
   return (
-    <IntroListContainer>
+    <IntroListContainer {...props}>
       {isFirst ? (
         <IntroListColumn className="first-list-col">
-          <IntroListAlbumTitle>{title}</IntroListAlbumTitle>
+          <IntroListAlbumTitle>{$title}</IntroListAlbumTitle>
           <IntroListAlbumSubTitle>{subTitle}</IntroListAlbumSubTitle>
         </IntroListColumn>
       ) : (
         <>
           <IntroListColumn {...props} />
           <IntroListColumn>
-            <IntroListAlbumTitle>{title}</IntroListAlbumTitle>
+            <IntroListAlbumTitle>{$title}</IntroListAlbumTitle>
             <IntroListAlbumSubTitle>{subTitle}</IntroListAlbumSubTitle>
           </IntroListColumn>
         </>
@@ -88,6 +89,7 @@ const IntroList: React.FunctionComponent<IntroListProps> = (props: IntroListProp
 
 IntroList.defaultProps = {
   isFirst: false,
+  isLast: false,
 };
 
 export default IntroList;
