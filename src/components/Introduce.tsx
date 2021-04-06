@@ -1,4 +1,5 @@
 import React from 'react';
+import { animated } from 'react-spring';
 import styled from 'styled-components';
 import IntroList from './IntroList';
 import BlumingSource from 'assets/Image/blumingCover.jpg';
@@ -6,13 +7,16 @@ import BbibbiSource from 'assets/Image/bbibbiCover.jpg';
 import goodDaySource from 'assets/Image/goodDayCover.jpg';
 import LilacSource from 'assets/Image/lilacCover.jpg';
 import ThroughTheNightSource from 'assets/Image/throughTheNightCover.jpg';
+import { useAboutState } from 'store/aboutStore/context';
+import { useTranslationPosition } from 'hooks/useTranslatePosition';
 
-const IntroduceContainer = styled.div`
+const IntroduceContainer = styled(animated.div)`
   display: flex;
   flex-direction: column;
   padding: 7rem;
   width: 150vw;
   height: 100%;
+  transition: transform 0.3s linear;
 `;
 
 const TopBanner = styled.div`
@@ -29,8 +33,11 @@ const BottomBanner = styled.div`
 `;
 
 const Introduce: React.FunctionComponent = () => {
+  const { translateX } = useAboutState();
+  const subTranslate = useTranslationPosition(translateX)[1];
+
   return (
-    <IntroduceContainer>
+    <IntroduceContainer style={subTranslate}>
       <TopBanner>
         <IntroList
           isFirst={true}
