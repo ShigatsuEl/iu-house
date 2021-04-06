@@ -19,26 +19,28 @@ const IntroduceContainer = styled(animated.div)`
   transition: transform 0.3s linear;
 `;
 
-const TopBanner = styled.div`
+const TopBanner = styled(animated.div)`
   display: flex;
   width: 100%;
   height: 100%;
+  transition: transform 0.3s linear;
 `;
 
-const BottomBanner = styled.div`
+const BottomBanner = styled(animated.div)`
   display: flex;
   width: 100%;
   height: 100%;
   padding-left: 15rem;
+  transition: transform 0.3s linear;
 `;
 
 const Introduce: React.FunctionComponent = () => {
   const { translateX } = useAboutState();
-  const subTranslate = useTranslationPosition(translateX)[1];
+  const [_, subTranslate, topBannerTranslate, bottomBannerTranslate] = useTranslationPosition(translateX);
 
   return (
     <IntroduceContainer style={subTranslate}>
-      <TopBanner>
+      <TopBanner style={topBannerTranslate}>
         <IntroList
           isFirst={true}
           $title="Who is she?"
@@ -47,7 +49,7 @@ const Introduce: React.FunctionComponent = () => {
         <IntroList $title="Bluming" subTitle="December, 2019" url={BlumingSource} />
         <IntroList $title="Through the Night" subTitle="March ,2017" url={ThroughTheNightSource} />
       </TopBanner>
-      <BottomBanner>
+      <BottomBanner style={bottomBannerTranslate}>
         <IntroList $title="Lilac" subTitle="March, 2021" url={LilacSource} />
         <IntroList $title="BBiBBi" subTitle="October, 2018" url={BbibbiSource} />
         <IntroList $title="You & I" subTitle="November, 2011" url={goodDaySource} isLast={true} />
