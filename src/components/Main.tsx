@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { animated } from 'react-spring';
 import { Throttle } from 'react-throttle';
 import styled from 'styled-components';
@@ -7,6 +7,8 @@ import { useTranslationPosition } from 'hooks/useTranslatePosition';
 import Lyric from './Lyric';
 import Video from './Video';
 import Introduce from './Introduce';
+import { useAboutDispatch, useAboutState } from 'store/aboutStore/context';
+import { Types } from 'store/aboutStore/types';
 
 const MainContainer = styled.div`
   display: flex;
@@ -68,24 +70,22 @@ interface MainProps {
 
 const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   const { videoRef } = props;
-  const [translateX, setTranslateX] = useState<number>(0);
   const subVideoRef = useRef<HTMLVideoElement>(null);
   const horizonRef = useRef<HTMLDivElement>(null);
+  const { translateX } = useAboutState();
+  const useDispatch = useAboutDispatch();
   const [mainTranslate, subTranslate] = useTranslationPosition(translateX);
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    setTranslateX((prevX) => prevX + e.deltaY * -1);
+    useDispatch({ type: Types.Update, payload: e.deltaY * -1 });
   };
 
   useEffect(() => {
-    if (translateX > 0) {
-      setTranslateX(0);
-    }
     if (horizonRef.current) {
       if (horizonRef.current?.getBoundingClientRect().width <= translateX * -1) {
         // console.log(horizonRef.current?.getBoundingClientRect().width, translateX * -1);
         // Todo: Horizon Container의 width에서 마지막 자식 컴포넌트 width를 뺀 값이 translateX값보다 적을 때 whell prevent하기
-        setTranslateX((prevX) => prevX);
+        // setTranslateX((prevX) => prevX);
       }
     }
   }, [translateX]);

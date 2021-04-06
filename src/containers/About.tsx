@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Header from 'components/Header';
 import Main from 'components/Main';
+import { AboutProvider } from 'store/aboutStore/context';
 
 const AboutContainer = styled.div`
   display: flex;
@@ -31,7 +32,9 @@ const About: React.FunctionComponent<AboutProps> = (props: AboutProps) => {
   return (
     <AboutContainer ref={aboutContainerRef}>
       <Header />
-      <Main videoRef={videoRef} audioRef={audioRef} />
+      <AboutProvider>
+        <Main videoRef={videoRef} audioRef={audioRef} />
+      </AboutProvider>
     </AboutContainer>
   );
 };
