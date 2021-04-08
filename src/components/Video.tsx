@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import Source from '../assets/video/celebrityVideo.mp4';
 
 type VideoComponentProps = {
   $loading: boolean;
@@ -43,12 +42,14 @@ const VideoComponent = styled.video<VideoComponentProps>`
 `;
 
 interface VideoProps {
+  src: string;
   isHome?: boolean;
   autoPlay?: boolean;
   videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
 const Video = forwardRef<HTMLVideoElement, VideoProps>((props: VideoProps, ref) => {
+  const { src } = props;
   const [loading, setLoading] = useState<boolean>(true);
 
   const isVideoLoad = () => {
@@ -62,7 +63,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>((props: VideoProps, ref) 
 
   return (
     <VideoComponent ref={ref} $loading={loading} {...props} muted loop playsInline controlsList="nodownload">
-      <source src={Source} type="video/mp4" />
+      <source src={src} type="video/mp4" />
       Your browser does not support the video tag.
     </VideoComponent>
   );

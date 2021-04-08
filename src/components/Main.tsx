@@ -3,12 +3,14 @@ import { animated } from 'react-spring';
 import { Throttle } from 'react-throttle';
 import styled from 'styled-components';
 import CoverSource from 'assets/Image/celebrityCover.jpg';
+import celebritySource from 'assets/video/celebrityVideo.mp4';
+import lilacSource from 'assets/video/lilacVideo.mp4';
 import { useTranslationPosition } from 'hooks/useTranslatePosition';
+import { useAboutDispatch, useAboutState } from 'store/aboutStore/context';
+import { Types } from 'store/aboutStore/types';
 import Lyric from './Lyric';
 import Video from './Video';
 import Introduce from './Introduce';
-import { useAboutDispatch, useAboutState } from 'store/aboutStore/context';
-import { Types } from 'store/aboutStore/types';
 
 const MainContainer = styled.div`
   display: flex;
@@ -70,7 +72,8 @@ interface MainProps {
 
 const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   const { videoRef } = props;
-  const subVideoRef = useRef<HTMLVideoElement>(null);
+  const subSmVideoRef = useRef<HTMLVideoElement>(null);
+  const subLgVideoRef = useRef<HTMLVideoElement>(null);
   const horizonRef = useRef<HTMLDivElement>(null);
   const { translateX } = useAboutState();
   const useDispatch = useAboutDispatch();
@@ -94,12 +97,14 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
     // videoRef Prop을 받았을 때(Home Video만 제외)만 동작
     if (videoRef !== undefined) {
       // Home Video와 Sub Video가 존재하고 Home Video의 재생상태가 멈춤이 아닐때만 동작
-      if (videoRef.current && subVideoRef.current && !videoRef.current.paused) {
-        subVideoRef.current.currentTime = videoRef.current.currentTime;
-        subVideoRef.current.play();
+      if (videoRef.current && subSmVideoRef.current && subLgVideoRef.current && !videoRef.current.paused) {
+        subSmVideoRef.current.currentTime = videoRef.current.currentTime;
+        subLgVideoRef.current.currentTime = videoRef.current.currentTime;
+        subSmVideoRef.current.play();
+        subLgVideoRef.current.play();
       }
     }
-  }, [subVideoRef, videoRef.current?.paused]);
+  }, [subSmVideoRef, subLgVideoRef, videoRef.current?.paused]);
 
   return (
     <Throttle time="100" handler="onWheel">
@@ -111,9 +116,13 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
           </LyricContainer>
           <VideoContainer style={subTranslate}>
             <VideoWrapper />
-            <Video ref={subVideoRef} videoRef={videoRef} isHome={false} autoPlay={false} />
+            <Video ref={subSmVideoRef} src={celebritySource} videoRef={videoRef} isHome={false} autoPlay={false} />
           </VideoContainer>
           <Introduce />
+          <VideoContainer style={subTranslate}>
+            <VideoWrapper />
+            <Video ref={subLgVideoRef} src={lilacSource} videoRef={videoRef} isHome={false} autoPlay={false} />
+          </VideoContainer>
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>
         </HorizonContainer>

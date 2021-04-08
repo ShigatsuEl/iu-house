@@ -5,6 +5,7 @@ import Video from 'components/Video';
 import Audio from 'components/Audio';
 import Modal from 'components/Modal';
 import Cursor from 'components/Cursor';
+import Source from 'assets/video/celebrityVideo.mp4';
 
 const App: React.FunctionComponent = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -16,7 +17,7 @@ const App: React.FunctionComponent = () => {
       <GlobalStyle />
       <Cursor />
       <Modal audioRef={audioRef} videoRef={videoRef} isMuted={isMuted} setIsMuted={setIsMuted} />
-      <Video ref={videoRef} />
+      <Video ref={videoRef} src={Source} />
       <Audio ref={audioRef} isMuted={isMuted} setIsMuted={setIsMuted} />
       <Router videoRef={videoRef} audioRef={audioRef} />
     </>

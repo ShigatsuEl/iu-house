@@ -1,27 +1,27 @@
 ﻿export default `
 [00:00.00]Artist - IU & Song - Celebrity
-[00:01.12]세상의 모서리
-[00:03.60]구부정하게 커버린 골칫거리 outsider
-[00:10.72]걸음걸이‚ 옷차림
-[00:13.12]이어폰 너머 playlist 음악까지 다 minor
-[00:20.41]넌 모르지 떨군 고개 위
-[00:24.81]환한 빛 조명이 (어딜 비추는지)
-[00:29.31]느려도 좋으니 결국 알게 되길
-[00:34.51]The one and only
-[00:37.31]You are my celebrity
-[00:39.81]잊지마 넌 흐린 어둠 사이
+[00:02.10]세상의 모서리
+[00:04.80]구부정하게 커버린 골칫거리 outsider
+[00:11.72]걸음걸이‚ 옷차림
+[00:14.30]이어폰 너머 playlist 음악까지 다 minor
+[00:21.41]넌 모르지 떨군 고개 위
+[00:26.50]환한 빛 조명이 (어딜 비추는지)
+[00:30.30]느려도 좋으니 결국 알게 되길
+[00:35.30]The one and only
+[00:38.50]You are my celebrity
+[00:40.81]잊지마 넌 흐린 어둠 사이
 [00:45.01]왼손으로 그린 별 하나
-[00:49.51]보이니 그 유일함이 얼마나
-[00:54.61]아름다운지 (말야)
-[00:57.00]You are my celebrity
-[00:59.31](I know you are‚ are)
-[01:01.42](I know you are‚ are)
-[01:03.81](I know you are‚ you are‚ are)
-[01:07.00]Celebrity
-[01:08.41](I know you are‚ are)
-[01:11.00](I know you are‚ are)
-[01:13.41](I know you are‚ are)
-[01:15.91]You are my celebrity
+[00:50.51]보이니 그 유일함이 얼마나
+[00:55.61]아름다운지 (말야)
+[00:58.00]You are my celebrity
+[00:60.31](I know you are‚ are)
+[01:02.42](I know you are‚ are)
+[01:04.81](I know you are‚ you are‚ are)
+[01:08.00]Celebrity
+[01:09.41](I know you are‚ are)
+[01:12.00](I know you are‚ are)
+[01:14.41](I know you are‚ are)
+[01:16.91]You are my celebrity
 [01:18.01]지쳐버린 표정 마치
 [01:20.21]전원을 꺼놓은 듯이 심장 소린 too quiet
 [01:27.22]네가 가진 반짝거림
