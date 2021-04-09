@@ -6,7 +6,7 @@ type VideoComponentProps = {
   isHome?: boolean;
 };
 
-type SizeType = Pick<VideoProps, 'isHome'>;
+type SizeType = Pick<VideoProps, 'isHome' | 'isLarge'>;
 
 const sizeStyles = css<SizeType>`
   ${({ isHome }) =>
@@ -23,15 +23,22 @@ const sizeStyles = css<SizeType>`
       -webkit-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
     `}
-  ${({ isHome }) =>
-    isHome !== true &&
-    css`
-      width: 44vw;
-      height: 33vw;
-      min-width: 88vh;
-      min-height: 66vh;
-      object-fit: fill;
-    `}
+  ${({ isHome, isLarge }) =>
+    isHome !== true && isLarge !== true
+      ? css`
+          width: 44vw;
+          height: 33vw;
+          min-width: 88vh;
+          min-height: 66vh;
+          object-fit: fill;
+        `
+      : css`
+          width: 100%;
+          height: 56.25%;
+          min-width: 177.77vh;
+          min-height: 100vh;
+          object-fit: fill;
+        `}
 `;
 
 const VideoComponent = styled.video<VideoComponentProps>`
@@ -44,6 +51,7 @@ const VideoComponent = styled.video<VideoComponentProps>`
 interface VideoProps {
   src: string;
   isHome?: boolean;
+  isLarge?: boolean;
   autoPlay?: boolean;
   videoRef?: React.RefObject<HTMLVideoElement>;
 }
@@ -73,6 +81,7 @@ Video.displayName = 'Video';
 
 Video.defaultProps = {
   isHome: true,
+  isLarge: false,
   autoPlay: false,
 };
 

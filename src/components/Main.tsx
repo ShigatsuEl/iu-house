@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { animated } from 'react-spring';
 import { Throttle } from 'react-throttle';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import CoverSource from 'assets/Image/celebrityCover.jpg';
 import celebritySource from 'assets/video/celebrityVideo.mp4';
 import lilacSource from 'assets/video/lilacVideo.mp4';
@@ -44,19 +44,39 @@ const LyricCover = styled.div<{ url: string }>`
   background-position: 50% 10%;
 `;
 
-const VideoContainer = styled(animated.div)`
-  padding: 7rem 7rem 7rem 0;
-  width: 50vw;
-  height: 100%;
-  transition: transform 0.3s linear;
+const VideoContainer = styled(animated.div)<{ isLarge: boolean }>`
+  ${(props) =>
+    props.isLarge !== true
+      ? css`
+          padding: 7rem 7rem 7rem 0;
+          width: 50vw;
+          height: 100%;
+          transition: transform 0.3s linear;
+        `
+      : css`
+          padding: 0 7rem;
+          width: 100vw;
+          height: 100%;
+          transition: transform 0.3s linear;
+        `}
 `;
 
-const VideoWrapper = styled.div`
+const VideoWrapper = styled.div<{ isLarge: boolean }>`
   position: absolute;
-  top: 0;
-  width: 50vw;
-  height: 100%;
   z-index: 3;
+  ${(props) =>
+    props.isLarge !== true
+      ? css`
+          top: 0;
+          width: 50vw;
+          height: 100%;
+        `
+      : css`
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100%;
+        `}
 `;
 
 const ExamComponent = styled.div`
@@ -114,14 +134,21 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
             <LyricCover url={CoverSource} />
             <Lyric {...props} />
           </LyricContainer>
-          <VideoContainer style={subTranslate}>
-            <VideoWrapper />
-            <Video ref={subSmVideoRef} src={celebritySource} videoRef={videoRef} isHome={false} autoPlay={false} />
+          <VideoContainer style={subTranslate} isLarge={false}>
+            <VideoWrapper isLarge={false} />
+            <Video ref={subSmVideoRef} videoRef={videoRef} src={celebritySource} isHome={false} autoPlay={false} />
           </VideoContainer>
           <Introduce />
-          <VideoContainer style={subTranslate}>
-            <VideoWrapper />
-            <Video ref={subLgVideoRef} src={lilacSource} videoRef={videoRef} isHome={false} autoPlay={false} />
+          <VideoContainer style={subTranslate} isLarge={true}>
+            <VideoWrapper isLarge={true} />
+            <Video
+              ref={subLgVideoRef}
+              videoRef={videoRef}
+              src={lilacSource}
+              isHome={false}
+              isLarge={true}
+              autoPlay={false}
+            />
           </VideoContainer>
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>
