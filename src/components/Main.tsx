@@ -11,6 +11,7 @@ import { Types } from 'store/aboutStore/types';
 import Lyric from './Lyric';
 import Video from './Video';
 import Introduce from './Introduce';
+import NewSong from './NewSong';
 
 const MainContainer = styled.div`
   display: flex;
@@ -44,9 +45,9 @@ const LyricCover = styled.div<{ url: string }>`
   background-position: 50% 10%;
 `;
 
-const VideoContainer = styled(animated.div)<{ isLarge: boolean }>`
+const VideoContainer = styled(animated.div)<{ $isLarge: boolean }>`
   ${(props) =>
-    props.isLarge !== true
+    props.$isLarge !== true
       ? css`
           padding: 7rem 7rem 7rem 0;
           width: 50vw;
@@ -61,11 +62,11 @@ const VideoContainer = styled(animated.div)<{ isLarge: boolean }>`
         `}
 `;
 
-const VideoWrapper = styled.div<{ isLarge: boolean }>`
+const VideoWrapper = styled.div<{ $isLarge: boolean }>`
   position: absolute;
   z-index: 3;
   ${(props) =>
-    props.isLarge !== true
+    props.$isLarge !== true
       ? css`
           top: 0;
           width: 50vw;
@@ -134,13 +135,14 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
             <LyricCover url={CoverSource} />
             <Lyric {...props} />
           </LyricContainer>
-          <VideoContainer style={subTranslate} isLarge={false}>
-            <VideoWrapper isLarge={false} />
+          <VideoContainer style={subTranslate} $isLarge={false}>
+            <VideoWrapper $isLarge={false} />
             <Video ref={subSmVideoRef} videoRef={videoRef} src={celebritySource} isHome={false} autoPlay={false} />
           </VideoContainer>
           <Introduce />
-          <VideoContainer style={subTranslate} isLarge={true}>
-            <VideoWrapper isLarge={true} />
+          <NewSong />
+          <VideoContainer style={subTranslate} $isLarge={true}>
+            <VideoWrapper $isLarge={true} />
             <Video
               ref={subLgVideoRef}
               videoRef={videoRef}
