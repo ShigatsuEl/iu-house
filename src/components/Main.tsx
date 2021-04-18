@@ -12,6 +12,7 @@ import Lyric from './Lyric';
 import Video from './Video';
 import Introduce from './Introduce';
 import NewSong from './NewSong';
+import Deck from './Deck';
 
 const MainContainer = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ const VideoContainer = styled(animated.div)<{ $isLarge: boolean }>`
           transition: transform 0.3s linear;
         `
       : css`
-          padding: 0 7rem;
+          padding: 0 0 0 7rem;
           width: 100vw;
           height: 100%;
           transition: transform 0.3s linear;
@@ -152,6 +153,7 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
               autoPlay={false}
             />
           </VideoContainer>
+          <Deck />
           <ExamComponent>Test Component 1</ExamComponent>
           <ExamComponent>Test Component 2</ExamComponent>
         </HorizonContainer>
