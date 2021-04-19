@@ -24,6 +24,7 @@ const HorizonContainer = styled(animated.div)`
   align-items: center;
   height: 100%;
   overflow-x: hidden;
+  transition: transform 0.3s linear;
 `;
 
 const LyricContainer = styled(animated.div)`
@@ -102,7 +103,11 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
   const [mainTranslate, subTranslate] = useTranslationPosition(translateX);
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    useDispatch({ type: Types.Update, payload: e.deltaY * -1 });
+    if (e.deltaY === 125 || e.deltaY === -125) {
+      useDispatch({ type: Types.Update, payload: e.deltaY * -1 });
+    } else {
+      useDispatch({ type: Types.Update, payload: (e.deltaY / Math.abs(e.deltaY)) * 125 * -1 });
+    }
   };
 
   useEffect(() => {
