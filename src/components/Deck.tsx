@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useSprings, animated, interpolate } from 'react-spring';
-import { useGesture } from 'react-use-gesture';
+import { useSprings, animated, to as interpolate } from 'react-spring';
+import { useDrag } from 'react-use-gesture';
 import styled from 'styled-components';
 import { useTranslationPosition } from 'hooks/useTranslatePosition';
 import { useAboutState } from 'store/aboutStore/context';
 
-const shuffleCards = [
+const cards = [
   'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
   'https://upload.wikimedia.org/wikipedia/en/5/53/RWS_Tarot_16_Tower.jpg',
   'https://upload.wikimedia.org/wikipedia/en/9/9b/RWS_Tarot_07_Chariot.jpg',
@@ -19,7 +19,7 @@ const CardContainer = styled(animated.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80vw;
+  width: 100vw;
   height: 100%;
   transition: transform 0.3s linear;
   overflow: hidden;
@@ -28,7 +28,7 @@ const CardContainer = styled(animated.div)`
 const CardWrapper = styled(animated.div)`
   position: absolute;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   will-change: transform;
   display: flex;
   align-items: center;
@@ -55,40 +55,38 @@ const from = (i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`;
 
-function shuffleCardStack(card: string[]) {
+/* function shuffleCardStack(card: string[]) {
   for (let i = card.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [card[i], card[j]] = [card[j], card[i]];
   }
   return card;
-}
+} */
 
 const Deck: React.FunctionComponent = () => {
   const { translateX } = useAboutState();
   const subTranslate = useTranslationPosition(translateX)[1];
-  const cards = useState(() => shuffleCardStack(shuffleCards))[0];
   const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
-  const [springs, set] = useSprings(cards.length, (i) => ({ ...to(i), from: from(i) })); // Create a bunch of springs using the helpers above
+  const [springs, setSprings] = useSprings(cards.length, (i) => ({ ...to(i), from: from(i) })); // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
-  const bind = useGesture(({ args: [index], down, delta: [xDelta], distance, direction: [xDir], velocity }) => {
+  const bind = useDrag(({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
     const trigger = velocity > 0.2; // If you flick hard enough it should trigger the card to fly out
     const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
     if (!down && trigger) gone.add(index); // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
-    set((i) => {
+    setSprings((i) => {
       if (index !== i) return; // We're only interested in changing spring-data for the current spring
       const isGone = gone.has(index);
-      const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0; // When a card is gone it flys out left or right, otherwise goes back to zero
-      const rot = xDelta / 100 + (isGone ? dir * 10 * velocity : 0); // How much the card tilts, flicking it harder makes it rotate faster
+      const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0; // When a card is gone it flys out left or right, otherwise goes back to zero
+      const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0); // How much the card tilts, flicking it harder makes it rotate faster
       const scale = down ? 1.1 : 1; // Active cards lift up a bit
       return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } };
     });
     if (!down && gone.size === cards.length)
       setTimeout(() => {
         gone.clear();
-        set((i) => to(i));
+        setSprings((i) => to(i));
       }, 600);
   });
-  // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
 
   return (
     <CardContainer style={subTranslate}>

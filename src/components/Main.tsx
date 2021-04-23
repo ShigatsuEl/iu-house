@@ -104,9 +104,9 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (e.deltaY === 125 || e.deltaY === -125) {
-      useDispatch({ type: Types.Update, payload: e.deltaY * -1 });
+      useDispatch({ type: Types.Update, payload: e.deltaY * -1.5 });
     } else {
-      useDispatch({ type: Types.Update, payload: (e.deltaY / Math.abs(e.deltaY)) * 125 * -1 });
+      useDispatch({ type: Types.Update, payload: (e.deltaY / Math.abs(e.deltaY)) * 125 * -1.5 });
     }
   };
 
