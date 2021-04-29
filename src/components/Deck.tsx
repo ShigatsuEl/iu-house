@@ -14,10 +14,18 @@ const cards = [
   'https://upload.wikimedia.org/wikipedia/en/d/de/RWS_Tarot_01_Magician.jpg',
 ];
 
+const cardsExplain = [
+  { header: 'a', body: 'a' },
+  { header: 'b', body: 'b' },
+  { header: 'c', body: 'c' },
+  { header: 'd', body: 'd' },
+  { header: 'e', body: 'e' },
+  { header: 'f', body: 'f' },
+];
+
 const CardContainer = styled(animated.div)`
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100%;
@@ -27,7 +35,7 @@ const CardContainer = styled(animated.div)`
 
 const CardWrapper = styled(animated.div)`
   position: absolute;
-  width: 100vw;
+  width: 60%;
   height: 100vh;
   will-change: transform;
   display: flex;
@@ -49,6 +57,27 @@ const CardOne = styled(animated.div)`
   box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3);
 `;
 
+const CardExplainWrapper = styled(animated.div)`
+  position: absolute;
+  right: -1px;
+  width: 40%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ba55d3;
+`;
+
+const CardExplainHeader = styled(animated.h2)`
+  font-size: 5rem;
+  color: white;
+`;
+
+const CardExplainBody = styled(animated.span)`
+  font-size: 2rem;
+  color: white;
+`;
+
 const to = (i) => ({ x: 0, y: i * -4, scale: 1, rot: -10 + Math.random() * 20, delay: i * 100 });
 const from = (i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
 const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`;
@@ -65,14 +94,27 @@ const Deck: React.FunctionComponent = () => {
   const { translateX } = useAboutState();
   const subTranslate = useTranslationPosition(translateX)[1];
   const [gone] = useState(() => new Set());
+  const [last, setLast] = useState(5);
   const [springs, setSprings] = useSprings(cards.length, (i) => ({ ...to(i), from: from(i) }));
+
+  const getLastValue = (set) => {
+    let value: number | undefined;
+    for (value of set);
+    if (value === undefined || value === 0) return gone.size - 1;
+    return value - 1;
+  };
 
   const bind = useDrag(({ args: [index], down, movement: [mx, my], direction: [xDir, yDir], velocity }) => {
     const trigger = velocity > 0.2;
     const verticalDir = xDir < 0 ? -1 : 1;
     const horizontalDir = yDir < 0 ? -1 : 1;
-    if (!down && trigger && (Math.abs(mx) > window.innerWidth / 4 || Math.abs(my) > window.innerHeight / 4))
+    if (!down && trigger && (Math.abs(mx) > (window.innerWidth * 0.6) / 4 || Math.abs(my) > window.innerHeight / 4)) {
       gone.add(index);
+      setLast(() => {
+        const lastValue = getLastValue(gone);
+        return lastValue;
+      });
+    }
     setSprings((i) => {
       if (index !== i) return;
       const isGone = gone.has(index);
@@ -80,6 +122,7 @@ const Deck: React.FunctionComponent = () => {
       const y = isGone ? Math.abs(my) * 4 * horizontalDir : down ? my : 0;
       const rot = mx / 100 + (isGone ? verticalDir * 10 * velocity : 0);
       const scale = down ? 1.1 : 1;
+      console.log(gone.size);
       return { x, y, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } };
     });
     if (!down && gone.size === cards.length)
@@ -99,6 +142,10 @@ const Deck: React.FunctionComponent = () => {
           />
         </CardWrapper>
       ))}
+      <CardExplainWrapper>
+        <CardExplainHeader>{cardsExplain[last].header}</CardExplainHeader>
+        <CardExplainBody>{cardsExplain[last].body}</CardExplainBody>
+      </CardExplainWrapper>
     </CardContainer>
   );
 };
