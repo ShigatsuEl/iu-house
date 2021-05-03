@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSprings, animated, to as interpolate } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import styled from 'styled-components';
@@ -81,20 +81,23 @@ const to = (i) => ({ x: 0, y: i * -4, scale: 1, rot: -10 + Math.random() * 20, d
 const from = (i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
 const trans = (r, s) => `perspective(1500px) rotateX(30deg) rotateY(${r / 10}deg) rotateZ(${r}deg) scale(${s})`;
 
-/* function shuffleCardStack(card: string[]) {
+function shuffleCardStack(card: string[], cardExplain: { header: string; body: string }[]) {
   for (let i = card.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [card[i], card[j]] = [card[j], card[i]];
+    [cardExplain[i], cardExplain[j]] = [cardExplain[j], cardExplain[i]];
   }
-  return card;
-} */
+  return [card, cardExplain];
+}
 
 const Deck: React.FunctionComponent = () => {
   const { translateX } = useAboutState();
   const subTranslate = useTranslationPosition(translateX)[1];
+  const [suffleCards, setShuffleCards] = useState(cards);
+  const [suffleCardsEp, setShuffleCardsEp] = useState(cardsExplain);
   const [gone] = useState(() => new Set());
-  const [last, setLast] = useState(5);
-  const [springs, setSprings] = useSprings(cards.length, (i) => ({ ...to(i), from: from(i) }));
+  const [last, setLast] = useState(suffleCards.length - 1);
+  const [springs, setSprings] = useSprings(suffleCards.length, (i) => ({ ...to(i), from: from(i) }));
 
   const getLastValue = (set) => {
     let value: number | undefined;
@@ -121,15 +124,20 @@ const Deck: React.FunctionComponent = () => {
       const y = isGone ? Math.abs(my) * 4 * horizontalDir : down ? my : 0;
       const rot = mx / 100 + (isGone ? verticalDir * 10 * velocity : 0);
       const scale = down ? 1.1 : 1;
-      console.log(gone.size);
       return { x, y, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } };
     });
-    if (!down && gone.size === cards.length)
+    if (!down && gone.size === suffleCards.length)
       setTimeout(() => {
         gone.clear();
         setSprings((i) => to(i));
       }, 600);
   });
+
+  useEffect(() => {
+    const [randCard, randCardEp] = shuffleCardStack(cards, cardsExplain);
+    setShuffleCards(() => randCard as string[]);
+    setShuffleCardsEp(() => randCardEp as { header: string; body: string }[]);
+  }, []);
 
   return (
     <>
@@ -138,14 +146,14 @@ const Deck: React.FunctionComponent = () => {
           <CardWrapper key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
             <CardOne
               {...bind(i)}
-              style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }}
+              style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${suffleCards[i]})` }}
             />
           </CardWrapper>
         ))}
       </CardContainer>
       <CardExplainContainer style={subTranslate}>
-        <CardExplainHeader>{cardsExplain[last].header}</CardExplainHeader>
-        <CardExplainBody>{cardsExplain[last].body}</CardExplainBody>
+        <CardExplainHeader>{suffleCardsEp[last].header}</CardExplainHeader>
+        <CardExplainBody>{suffleCardsEp[last].body}</CardExplainBody>
       </CardExplainContainer>
     </>
   );
