@@ -27,20 +27,20 @@ const CardContainer = styled(animated.div)`
   position: relative;
   display: flex;
   align-items: center;
-  width: 100vw;
+  width: 60vw;
   height: 100%;
-  transition: transform 0.3s linear;
   overflow: hidden;
+  transition: transform 0.3s linear;
 `;
 
 const CardWrapper = styled(animated.div)`
   position: absolute;
-  width: 60%;
-  height: 100vh;
-  will-change: transform;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100vh;
+  will-change: transform;
 `;
 
 const CardOne = styled(animated.div)`
@@ -57,15 +57,14 @@ const CardOne = styled(animated.div)`
   box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3);
 `;
 
-const CardExplainWrapper = styled(animated.div)`
-  position: absolute;
-  right: -1px;
-  width: 40%;
-  height: 100vh;
+const CardExplainContainer = styled(animated.div)`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40vw;
+  height: 100vh;
   background-color: #ba55d3;
+  transition: transform 0.3s linear;
 `;
 
 const CardExplainHeader = styled(animated.h2)`
@@ -133,20 +132,22 @@ const Deck: React.FunctionComponent = () => {
   });
 
   return (
-    <CardContainer style={subTranslate}>
-      {springs.map(({ x, y, rot, scale }, i) => (
-        <CardWrapper key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
-          <CardOne
-            {...bind(i)}
-            style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }}
-          />
-        </CardWrapper>
-      ))}
-      <CardExplainWrapper>
+    <>
+      <CardContainer style={subTranslate}>
+        {springs.map(({ x, y, rot, scale }, i) => (
+          <CardWrapper key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+            <CardOne
+              {...bind(i)}
+              style={{ transform: interpolate([rot, scale], trans), backgroundImage: `url(${cards[i]})` }}
+            />
+          </CardWrapper>
+        ))}
+      </CardContainer>
+      <CardExplainContainer style={subTranslate}>
         <CardExplainHeader>{cardsExplain[last].header}</CardExplainHeader>
         <CardExplainBody>{cardsExplain[last].body}</CardExplainBody>
-      </CardExplainWrapper>
-    </CardContainer>
+      </CardExplainContainer>
+    </>
   );
 };
 
