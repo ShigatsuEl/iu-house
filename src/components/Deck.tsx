@@ -2,25 +2,76 @@ import React, { useEffect, useState } from 'react';
 import { useSprings, animated, to as interpolate } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import styled from 'styled-components';
+import DeckImgOne from 'assets/Image/deckOne.jpg';
+import DeckImgTwo from 'assets/Image/deckTwo.jpg';
+import DeckImgThree from 'assets/Image/deckThree.jpg';
+import DeckImgFour from 'assets/Image/deckFour.jpg';
+import DeckImgFive from 'assets/Image/deckFive.jpg';
+import DeckImgSix from 'assets/Image/deckSix.jpg';
+import DeckImgSeven from 'assets/Image/deckSeven.jpg';
+import DeckImgEight from 'assets/Image/deckEight.jpg';
+import DeckImgNine from 'assets/Image/deckNine.jpg';
+import DeckImgTen from 'assets/Image/deckTen.jpg';
 import { useTranslationPosition } from 'hooks/useTranslatePosition';
 import { useAboutState } from 'store/aboutStore/context';
 
 const cards = [
-  'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/5/53/RWS_Tarot_16_Tower.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/9/9b/RWS_Tarot_07_Chariot.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/d/db/RWS_Tarot_06_Lovers.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/thumb/8/88/RWS_Tarot_02_High_Priestess.jpg/690px-RWS_Tarot_02_High_Priestess.jpg',
-  'https://upload.wikimedia.org/wikipedia/en/d/de/RWS_Tarot_01_Magician.jpg',
+  DeckImgTen,
+  DeckImgNine,
+  DeckImgEight,
+  DeckImgSeven,
+  DeckImgSix,
+  DeckImgFive,
+  DeckImgFour,
+  DeckImgThree,
+  DeckImgTwo,
+  DeckImgOne,
 ];
 
 const cardsExplain = [
-  { header: 'a', body: 'a' },
-  { header: 'b', body: 'b' },
-  { header: 'c', body: 'c' },
-  { header: 'd', body: 'd' },
-  { header: 'e', body: 'e' },
-  { header: 'f', body: 'f' },
+  { header: '-IU, Love Alone', body: '“Maybe love is like looking for a placeThat doesn’t even exist”' },
+  {
+    header: '-IU, Can’t Love You Anymore',
+    body: '“It’s so funny. I try to turn things back We try to ignore it. But at this point How can we love again?”',
+  },
+  {
+    header: '-IU, Through the Night',
+    body:
+      '“Just like letters on the sand where waves were. I feel you’ll disappear to a far off place. I miss you again and miss you more”',
+  },
+  {
+    header: '-IU, Gloomy Clock',
+    body:
+      '“When time passes, this depression When time passes, the things I said were hard and complained about. They will become things of the past The sharp and emotional memories. They will become dull, become dull like a square wearing down to become a circle”',
+  },
+  {
+    header: '-IU, Love Alone',
+    body: '“I had nothing. But thanks to the scars you gave me I became the main character in a sad love story”',
+  },
+  {
+    header: '-IU, Love Story',
+    body: '“We were each other’s mirror reflections. Even until we broke apart from the looks we threw at each other”',
+  },
+  {
+    header: '-IU, nding Scene',
+    body:
+      '“Make sure you eat well, because it’ll all pass. You’ll be able to fall asleep like you did before. I really mean it You have the right to be happier”',
+  },
+  {
+    header: '-IU, Full Stop',
+    body:
+      '“I’ll miss you a lot. But I don’t ever wanna see you again. It hurts and I’ll cry. But I never want to smile because of you again”',
+  },
+  {
+    header: '-IU, Palette',
+    body:
+      '“Past twenty, not yet thirty In between, right thereWhen I’m not a kid or an adultWhen. I’m just meI shine the brightestSo don’t get scared when darkness comes',
+  },
+  {
+    header: '-IU, Gloomy Clock',
+    body:
+      '“When time passes, the breakup that tore my heart apartWhen time passes, the young memories that kicked away at the blanketsIt gets forgotten, gets forgotten, it just passes right byIt gets forgotten, gets forgotten, but back then I thought that was everything”',
+  },
 ];
 
 const CardContainer = styled(animated.div)`
@@ -59,8 +110,8 @@ const CardOne = styled(animated.div)`
 
 const CardExplainContainer = styled(animated.div)`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  padding: 7rem 0;
   width: 40vw;
   height: 100vh;
   background-color: #ba55d3;
@@ -68,11 +119,12 @@ const CardExplainContainer = styled(animated.div)`
 `;
 
 const CardExplainHeader = styled(animated.h2)`
+  margin-bottom: 5rem;
   font-size: 5rem;
   color: white;
 `;
 
-const CardExplainBody = styled(animated.span)`
+const CardExplainBody = styled(animated.p)`
   font-size: 2rem;
   color: white;
 `;
