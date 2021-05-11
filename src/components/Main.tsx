@@ -82,12 +82,6 @@ const VideoWrapper = styled.div<{ $isLarge: boolean }>`
         `}
 `;
 
-const ExamComponent = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 100%;
-`;
-
 interface MainProps {
   videoRef: React.RefObject<HTMLVideoElement>;
   audioRef: React.RefObject<HTMLAudioElement>;
@@ -104,21 +98,20 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (e.deltaY === 125 || e.deltaY === -125) {
-      useDispatch({ type: Types.Update, payload: e.deltaY * -1.5 });
+      useDispatch({
+        type: Types.Update,
+        payload: { wheelX: e.deltaY * -1.5, horizonX: horizonRef.current?.getBoundingClientRect().width },
+      });
     } else {
-      useDispatch({ type: Types.Update, payload: (e.deltaY / Math.abs(e.deltaY)) * 125 * -1.5 });
+      useDispatch({
+        type: Types.Update,
+        payload: {
+          wheelX: (e.deltaY / Math.abs(e.deltaY)) * 125 * -1.5,
+          horizonX: horizonRef.current?.getBoundingClientRect().width,
+        },
+      });
     }
   };
-
-  useEffect(() => {
-    if (horizonRef.current) {
-      if (horizonRef.current?.getBoundingClientRect().width <= translateX * -1) {
-        // console.log(horizonRef.current?.getBoundingClientRect().width, translateX * -1);
-        // Todo: Horizon Container의 width에서 마지막 자식 컴포넌트 width를 뺀 값이 translateX값보다 적을 때 whell prevent하기
-        // setTranslateX((prevX) => prevX);
-      }
-    }
-  }, [translateX]);
 
   useEffect(() => {
     // videoRef Prop을 받았을 때(Home Video만 제외)만 동작
@@ -159,8 +152,6 @@ const Main: React.FunctionComponent<MainProps> = (props: MainProps) => {
             />
           </VideoContainer>
           <Deck />
-          <ExamComponent>Test Component 1</ExamComponent>
-          <ExamComponent>Test Component 2</ExamComponent>
         </HorizonContainer>
       </MainContainer>
     </Throttle>
