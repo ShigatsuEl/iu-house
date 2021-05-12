@@ -43,3 +43,64 @@ Let's try to using React and TypeScript to introduce IU
   - 아이유 카드 덱 구현
   - 카드 덱 360도 드래그 기능 추가
   - 카드 덱 상태와 카드 설명 덱 연동
+
+### Directory Structure
+
+```
+.vscode
+node_modules
+public
+src
+|-- @types
+|   |-- react-spring
+|   |-- react-throttle
+|   |-- react-use-gesture
+|-- assets
+|   |-- audio
+|   |-- Image
+|   |-- lrc
+|   |-- video
+|-- components
+|   |-- Autio.tsx
+|   |-- Cursor.tsx
+|   |-- Deck.tsx
+|   |-- Footer.tsx
+|   |-- Header.tsx
+|   |-- Introduce.tsx
+|   |-- IntroList.tsx
+|   |-- Lyric.tsx
+|   |-- Main.tsx
+|   |-- Modal.tsx
+|   |-- NewSong.tsx
+|   |-- Video.tsx
+|-- containers
+|   |-- About.tsx
+|   |-- Home.tsx
+|-- hooks
+|   |-- useElementPosition.tsx
+|   |-- useMousePosition.tsx
+|   |-- useTranslatePosition.tsx
+|-- store
+|   |-- aboutStore
+|   |   |-- context.tsx
+|   |   |-- reducer.ts
+|   |   |-- store.ts
+|   |   |-- types.ts
+|-- styles
+|   |-- globalStyles.ts
+|   |-- styled.d.ts
+|   |-- theme.ts
+|-- App.tsx
+|-- index.tsx
+|-- react-app-env.d.ts
+|-- Router.tsx
+.eslintrc.js
+.gitattributes
+.gitignore
+.prettierrc
+package-lock.json
+package.json
+README.md
+tsconfig.json
+yarn.lock
+```
