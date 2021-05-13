@@ -131,3 +131,28 @@ To start Server:<br>
   - 아이유 카드 덱 구현
   - 카드 덱 360도 드래그 기능 추가
   - 카드 덱 상태와 카드 설명 덱 연동
+
+### Development Process
+
+- 타입스크립트와 함께 CRA 프로젝트 생성
+- ESLint | Prettier | TypeScript 설정
+- 타입 정의와 함께 Styled Component 구성 및 Global Style 적용
+- Home | About 라우터 구성
+- 모달창 주요 기능(시작버튼, 음소거 시작버튼) 구현
+- 모달창 시작버튼, 음소거 시작버튼을 비디오와 오디오에 연동
+- 일정 영역 진입시, 마우스 따라가는 기능 구현
+- 외부 라이브러리 타입 정의
+- Footer 영역에 음소거 및 음소거 해제 버튼 구현
+- 마우스 커서 구현
+- 라우트 위치에 따른 비디오 컴포넌트 투명도 조절
+- About 페이지에서 좌우 스크롤 기능 구현
+- 좌우 스크롤에 Throttle | Debounce 함수 적용
+- 영상과 오디오 시간에 맞춰 가사 리더기 구현
+- Home 영상 플레이타임에 맞춰 About 영상 플레이타임 동일화
+- 인물을 소개하는 Introduce 컴포넌트 구현
+- 스크롤 동작에 따라 Introduce컴포넌트의 Top Banner와 Bottom Banner의 슬라이딩 대칭 효과
+- 전체적인 슬라이딩 효과를 위해 About Context | Reducer 구현
+- React Spring 라이브러리를 사용해 Deck 컴포넌트 구현
+- 좌우로 섞던 Deck 컴포넌트를 360도로 섞을 수 있도록 기능 추가
+- Deck 컴포넌트와 Deck 설명 컴포넌트를 연동
+- 슬라이드 양끝 제한으로 프로젝트 마무리
